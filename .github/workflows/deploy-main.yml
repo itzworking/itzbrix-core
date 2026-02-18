@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AWS_ACCOUNT_ID: '661012794455'
+  AWS_ACCOUNT_ID: '624826689034'
   AWS_REGION: eu-west-1
   AWS_ROLE_NAME: ITzGitHubActionsRole
   NODE_VERSION: '22'

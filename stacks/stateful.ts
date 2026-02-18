@@ -14,7 +14,6 @@ export class StatefulStack extends ITzStatefulStack {
 
     this.dynamodb.addTable("MainTable");
     this.dynamodb.addTable("UsersTable");
-    this.dynamodb.addTable("GmailAutomationTable");
 
     this.s3Buckets = new ITzS3Buckets(this, "S3Buckets", {
       configurations: props.configurations,

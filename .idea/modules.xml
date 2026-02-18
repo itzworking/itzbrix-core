@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/itzjulien-core.iml" filepath="$PROJECT_DIR$/.idea/itzjulien-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/itzbrix-core.iml" filepath="$PROJECT_DIR$/.idea/itzbrix-core.iml" />
     </modules>
   </component>
 </project>

@@ -9,7 +9,7 @@ import { StatefulStack } from "../stacks/stateful";
 import { WebappsStatelessStack } from "../stacks/webapps-stateless";
 
 (async () => {
-  const applicationName = "ITzJulien";
+  const applicationName = "ITzBrix";
   const configurations = await loadConfigurations(applicationName);
 
   const app = new cdk.App();

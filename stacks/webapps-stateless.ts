@@ -8,7 +8,6 @@ import {
   ITzWorkingStackProps,
 } from "@itzworking/cdk";
 import * as cdk from "aws-cdk-lib";
-import * as acm from "aws-cdk-lib/aws-certificatemanager";
 import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as route53Patterns from "aws-cdk-lib/aws-route53-patterns";
@@ -26,33 +25,7 @@ export class WebappsStatelessStack extends ITzWorkingStack {
   constructor(scope: Construct, id: string, props: WebappsStackProps) {
     super(scope, id, props);
     const webappDomainName = `www.${props.core.domainName}`;
-    const productionWebappDomainName = "www.itzjulien.com";
-
-    if (webappDomainName === productionWebappDomainName) {
-      const dotDevDomainName = "itzjulien.dev";
-      const dotDevHostedZone = route53.HostedZone.fromLookup(
-        this,
-        "DotDevHostedZone",
-        {
-          domainName: dotDevDomainName,
-        },
-      );
-      const dotDevCertificate = new acm.Certificate(
-        this.getGlobalResourceScope(),
-        "DotDevGlobalCertificate",
-        {
-          domainName: dotDevDomainName,
-          subjectAlternativeNames: [`*.${dotDevDomainName}`],
-          validation: acm.CertificateValidation.fromDns(dotDevHostedZone),
-        },
-      );
-      new route53Patterns.HttpsRedirect(this, "DotDevDomainRedirection", {
-        zone: dotDevHostedZone,
-        targetDomain: webappDomainName,
-        recordNames: [dotDevDomainName],
-        certificate: dotDevCertificate,
-      });
-    }
+    const productionWebappDomainName = "www.itzbrix.com";
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: props.configurations.core.hostedZoneDomainName,
@@ -70,20 +43,7 @@ export class WebappsStatelessStack extends ITzWorkingStack {
       productionWebappDomainName,
       localhost: "localhost:2601",
       applicationName: props.core.applicationName,
-      repository: "https://github.com/itzworking/itzjulien-www",
-      branchName: props.configurations.core.branch,
-    });
-
-    this.setupWebapp("athena", {
-      userPool: props.core.cognito.userPools["MainUserPool"],
-      webappDomainName: webappDomainName.replace("www.", "athena."),
-      productionWebappDomainName: productionWebappDomainName.replace(
-        "www.",
-        "athena.",
-      ),
-      localhost: "localhost:2602",
-      applicationName: props.core.applicationName,
-      repository: "https://github.com/itzworking/itzjulien-athena-webapp",
+      repository: "https://github.com/itzworking/itzbrix-www",
       branchName: props.configurations.core.branch,
     });
   }
