@@ -1,0 +1,55 @@
+# compiled output
+*.js
+!jest.config.js
+!cdk.js
+*.d.ts
+dist
+tmp
+out
+jest.result.json
+*.tsbuildinfo
+.eslintcache
+.env*
+
+# dependencies
+node_modules
+
+# IDEs and editors
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - IntelliJ
+.idea/*
+!.idea/inspectionProfiles
+!.idea/codeStyles
+!.idea/git_toolbox_blame.xml
+!.idea/*.iml
+!.idea/jsLibraryMappings.xml
+!.idea/modules.xml
+!.idea/prettier.xml
+!.idea/vcs.xml
+
+# misc
+npm-debug.log
+yarn-error.log
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# CDK
+.cdk.staging
+cdk.out
+cdk.context.json
+cdk.itzworking.json
