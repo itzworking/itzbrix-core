@@ -12,7 +12,7 @@ initSsm({
     "/core/log-level": "debug",
     "/core/log-retention-days": "9999",
     // "/core/branch": "main",
-    "/notifications/email/from-email": "no-reply@itzbrix.com",
+    "/notifications/email/from-email": "Brix <no-reply@itzbrix.com>",
   },
   override: true,
 }).then(() => console.log("SSM parameters initialized!"));
