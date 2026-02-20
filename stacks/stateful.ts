@@ -20,10 +20,13 @@ export class StatefulStack extends ITzStatefulStack {
       s3Construct: this.s3,
     });
 
+    this.dynamodb.addTable("WorkspacesTable");
+    this.dynamodb.addTable("WebsitesTable");
+
     /**
      * Capabilities
      */
-    this.dynamodb.addTable("Emails");
-    this.dynamodb.addTable("WebsocketConnections");
+    this.dynamodb.addTable("EmailsTable");
+    this.dynamodb.addTable("WebsocketConnectionsTable");
   }
 }

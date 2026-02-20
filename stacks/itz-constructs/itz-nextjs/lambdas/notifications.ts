@@ -11,9 +11,21 @@ const STATUS_MAP: Record<
   string,
   { emoji: string; color: number; label: string }
 > = {
-  STARTED: { emoji: "🏗️", color: 0xffa500, label: "Deployment Started" },
-  SUCCEED: { emoji: "🎉", color: 0x00ff00, label: "Deployment Successful" },
-  FAILED: { emoji: "💥", color: 0xff0000, label: "Deployment Failed" },
+  STARTED: {
+    emoji: ":arrow_forward: ",
+    color: 0x5865f2,
+    label: "Deployment Started",
+  },
+  SUCCEED: {
+    emoji: ":white_check_mark: ",
+    color: 0x57f287,
+    label: "Deployment Successful",
+  },
+  FAILED: {
+    emoji: ":red_circle: ",
+    color: 0xed4245,
+    label: "Deployment Failed",
+  },
 };
 
 const createAmplifyMessage = (detail: AmplifyEvent) => {
@@ -32,9 +44,9 @@ const createAmplifyMessage = (detail: AmplifyEvent) => {
   };
 
   const description = [
-    `**Branch:** \`${branch}\``,
-    `**URL:** https://${domain}`,
-    `**Console:** [View in AWS](${consoleUrl})`,
+    branch && branch !== "main" ? `Branch: \`${branch}\`` : "",
+    `URL: https://${domain}`,
+    `Console: [View in AWS](${consoleUrl})`,
     detail.jobStatus === "FAILED" ? "\n@everyone" : "",
   ]
     .filter(Boolean)

@@ -25,7 +25,7 @@ export class WebappsStatelessStack extends ITzWorkingStack {
   constructor(scope: Construct, id: string, props: WebappsStackProps) {
     super(scope, id, props);
     const webappDomainName = `www.${props.core.domainName}`;
-    const productionWebappDomainName = "www.itzbrix.com";
+    const productionDomainName = "itzbrix.com";
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HostedZone", {
       domainName: props.configurations.core.hostedZoneDomainName,
@@ -39,8 +39,9 @@ export class WebappsStatelessStack extends ITzWorkingStack {
 
     this.setupWebapp("www", {
       userPool: props.core.cognito.userPools["MainUserPool"],
+      domainName: props.core.domainName,
+      productionDomainName,
       webappDomainName,
-      productionWebappDomainName,
       localhost: "localhost:2601",
       applicationName: props.core.applicationName,
       repository: "https://github.com/itzworking/itzbrix-www",
@@ -67,7 +68,8 @@ export class WebappsStatelessStack extends ITzWorkingStack {
     id: string,
     props: {
       userPool?: cognito.IUserPool;
-      productionWebappDomainName: string;
+      domainName: string;
+      productionDomainName: string;
       webappDomainName: string;
       localhost?: string;
       applicationName: string;
@@ -75,8 +77,7 @@ export class WebappsStatelessStack extends ITzWorkingStack {
       branchName?: string;
     },
   ) {
-    const isProduction =
-      props.productionWebappDomainName === props.webappDomainName;
+    const isProduction = props.productionDomainName === props.domainName;
 
     let userPoolClient: cognito.UserPoolClient | undefined;
     if (props.userPool) {
@@ -188,8 +189,8 @@ export class WebappsStatelessStack extends ITzWorkingStack {
         ? userPoolClient.userPoolClientId
         : "",
       // Domains
-      NEXT_PUBLIC_PRODUCTION_DOMAIN_NAME: `${props.productionWebappDomainName}`,
-      NEXT_PUBLIC_DOMAIN_NAME: `${props.webappDomainName}`,
+      NEXT_PUBLIC_PRODUCTION_DOMAIN_NAME: `${props.productionDomainName}`,
+      NEXT_PUBLIC_DOMAIN_NAME: `${props.domainName}`,
     };
 
     this.writeDotEnvFile(id, environmentVariables);
@@ -199,7 +200,8 @@ export class WebappsStatelessStack extends ITzWorkingStack {
       repository: props.repository,
       branchName: props.branchName,
       nextJsDomainName: props.webappDomainName,
-      nextJsProductionDomainName: props.productionWebappDomainName,
+      domainName: props.domainName,
+      productionDomainName: props.productionDomainName,
       environmentVariables,
     });
   }

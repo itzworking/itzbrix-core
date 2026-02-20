@@ -115,7 +115,9 @@ export class ITzS3Buckets extends Construct {
   static setupS3Distributions(
     scope: Construct,
     props: {
-      s3Buckets: ITzS3Buckets | undefined;
+      s3Buckets:
+        | { publicBucketArn: string; privateBucketArn: string }
+        | undefined;
       hostedZone: route53.IHostedZone;
       certificate: acm.ICertificate;
       domainName: string;

@@ -18,7 +18,8 @@ interface ITzNextJSConstructProps {
   readonly branchName?: string;
   // readonly monorepoAppRoot?: string;
   readonly nextJsDomainName?: string;
-  readonly nextJsProductionDomainName: string;
+  readonly domainName: string;
+  readonly productionDomainName: string;
   readonly disableBuildNotifications?: boolean;
 
   readonly environmentVariables?: {
@@ -39,7 +40,6 @@ export class ITzNextJSConstruct extends Construct {
       repository,
       branchName,
       nextJsDomainName,
-      nextJsProductionDomainName,
       disableBuildNotifications,
       environmentVariables = {},
     } = props;
@@ -179,7 +179,8 @@ export class ITzNextJSConstruct extends Construct {
             REPOSITORY_URL: props.repository || "",
             BRANCH_NAME: props.branchName || "",
             WEBAPP_DOMAIN_NAME: nextJsDomainName ?? defaultDomainName,
-            PRODUCTION_DOMAIN_NAME: nextJsProductionDomainName,
+            DOMAIN_NAME: props.domainName,
+            PRODUCTION_DOMAIN_NAME: props.productionDomainName,
             AMPLIFY_APP_ID: this.appId,
           },
           bundling: lambdaBundlingOptions,

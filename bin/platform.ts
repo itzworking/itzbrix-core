@@ -7,6 +7,7 @@ import { DomainStack } from "../stacks/domain";
 import { S3BucketsStatelessStack } from "../stacks/s3-buckets-stateless";
 import { StatefulStack } from "../stacks/stateful";
 import { WebappsStatelessStack } from "../stacks/webapps-stateless";
+import { WebsitesManagementStateful } from "../stacks/websites-management/websites-management-stateful";
 
 (async () => {
   const applicationName = "ITzBrix";
@@ -50,9 +51,8 @@ import { WebappsStatelessStack } from "../stacks/webapps-stateless";
       description: "S3Buckets: stateless services",
       env,
       configurations,
-      core: coreStack,
-      stateful,
-      domain: domainStack,
+      useExperimentalImport: true,
+      s3Buckets: stateful.s3Buckets, // Passed as prop (instead of auto-import) to enforce cross-stack dependency with Stateful
       crossRegionReferences: region !== "us-east-1",
     },
   );
@@ -74,4 +74,18 @@ import { WebappsStatelessStack } from "../stacks/webapps-stateless";
   );
   webappsStateless.addDependency(coreStack);
   webappsStateless.addDependency(domainStack);
+
+  const websitesManagementStateful = new WebsitesManagementStateful(
+    app,
+    `${applicationName}WebsitesManagementStateful`,
+    {
+      description:
+        "Websites Management: S3 storage, CloudFront distributions and Lambda@Edge for multi-tenant website hosting",
+      env,
+      configurations,
+      core: coreStack,
+      crossRegionReferences: region !== "us-east-1",
+    },
+  );
+  websitesManagementStateful.addDependency(coreStack);
 })();

@@ -4,10 +4,17 @@ import * as route53 from "aws-cdk-lib/aws-route53";
 import { Construct } from "constructs";
 
 import { ITzS3Buckets } from "./itz-constructs";
-import { StatefulStack } from "./stateful";
+
+export type S3BucketsStatelessStackProps = StatelessStackProps & {
+  s3Buckets: { publicBucketArn: string; privateBucketArn: string };
+};
 
 export class S3BucketsStatelessStack extends StatelessStack {
-  constructor(scope: Construct, id: string, props: StatelessStackProps) {
+  constructor(
+    scope: Construct,
+    id: string,
+    props: S3BucketsStatelessStackProps,
+  ) {
     super(scope, id, props);
 
     const hostedZoneDomainName = props.configurations.core.hostedZoneDomainName;
@@ -27,17 +34,12 @@ export class S3BucketsStatelessStack extends StatelessStack {
       },
     );
 
-    const s3Buckets = [props.stateful]
-      .flat()
-      .find((s) => s instanceof StatefulStack)?.s3Buckets;
     ITzS3Buckets.setupS3Distributions(this, {
-      s3Buckets,
+      s3Buckets: props.s3Buckets,
       hostedZone,
       certificate,
       domainName,
     });
-
-    // this.loadLambdasFromFolderPath();
   }
 
   getLambdasFolderPath(): string {
