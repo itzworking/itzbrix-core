@@ -64,7 +64,7 @@ export class ITzNextJSConstruct extends Construct {
       oauthToken: cdk.SecretValue.secretsManager(
         `${applicationName}/gh-token`,
       ).unsafeUnwrap(),
-      name: applicationName,
+      name: new URL(repository).pathname.slice(1),
       iamServiceRole: amplifyRole.roleArn,
       enableBranchAutoDeletion: true,
       environmentVariables: Object.entries({
