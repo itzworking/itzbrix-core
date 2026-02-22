@@ -42,7 +42,7 @@ export class WebappsStatelessStack extends ITzWorkingStack {
       domainName: props.core.domainName,
       productionDomainName,
       webappDomainName,
-      localhost: "localhost:2601",
+      localhost: "localhost:2632",
       applicationName: props.core.applicationName,
       repository: "https://github.com/itzworking/itzbrix-www",
       branchName: props.configurations.core.branch,
