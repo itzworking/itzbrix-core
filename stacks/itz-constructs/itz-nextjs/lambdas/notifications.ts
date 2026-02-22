@@ -12,17 +12,17 @@ const STATUS_MAP: Record<
   { emoji: string; color: number; label: string }
 > = {
   STARTED: {
-    emoji: ":arrow_forward: ",
+    emoji: "🔵",
     color: 0x5865f2,
     label: "Deployment Started",
   },
   SUCCEED: {
-    emoji: ":white_check_mark: ",
+    emoji: "🟢",
     color: 0x57f287,
     label: "Deployment Successful",
   },
   FAILED: {
-    emoji: ":red_circle: ",
+    emoji: "🔴",
     color: 0xed4245,
     label: "Deployment Failed",
   },
@@ -35,7 +35,7 @@ const createAmplifyMessage = (detail: AmplifyEvent) => {
   const branch = process.env.BRANCH_NAME ?? detail.branchName;
   const domain = process.env.WEBAPP_DOMAIN_NAME;
 
-  const repo = repoUrl.replace(/^https?:\/\/github\.com\//, "");
+  const repo = new URL(repoUrl).pathname.slice(1);
   const consoleUrl = `https://${region}.console.aws.amazon.com/amplify/home?region=${region}#/${appId}/${detail.branchName}/${detail.jobId}`;
   const status = STATUS_MAP[detail.jobStatus] ?? {
     emoji: "❓",
